@@ -1,0 +1,48 @@
+#!/bin/bash
+
+## APT-GET ##
+    apt-get update
+    DEBIAN_FRONTEND=noninteractive apt-get -y \
+        -o DPkg::Options::=--force-confdef \
+        -o DPkg::Options::=--force-confold \
+        install git-core \
+	build-essential \
+	curl wget \
+	openssl ssl-cert libssl-dev \
+	apache2 libapache2-mod-proxy-html \
+	php5 php5-curl php5-cli php5-intl php-apc 
+
+## Node, npm and bower ##
+   mkdir -p /usr/local/src
+# node
+   cd /usr/local/src
+   git clone http://github.com/ry/node.git /tmp/node
+# node compile
+   
+   cd /usr/local/src/node
+   echo "------------- configure node ----------------"
+   res=`./configure > ../config.log`
+   echo "------------- install node -------------------"
+   res && make && make install >> ../config.log
+
+# npm install
+   echo "------------- install npm --------------------"
+   mkdir /usr/local/src/npm
+   cd /usr/local/src/npm
+   curl -O -L https://npmjs.org/install.sh
+   sh install.sh
+
+# config and install with npm
+   echo "-------------- install bower -----------------"
+   npm install -g bower
+
+# apache config
+mkdir -p /var/www/web
+chmod -R 700 /var/www/web
+chown -R www-data:www-data /var/www/web 
+a2enmod php5
+service apache2 reload
+
+echo "Job done ;)"
+
+
