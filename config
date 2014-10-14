@@ -2,6 +2,8 @@
 
 CHANGE_KEYMAP=false
 
+mkdir -p /usr/local/src #create our working directory if it not exist
+
 ## FLAG the option ##
 while getopts ":a" opt; do
   case $opt in
@@ -16,7 +18,7 @@ while getopts ":a" opt; do
 done
 
 ## APT-GET ##
-    apt-get update
+    apt-get update >> /usr/local/src/config-debian-apt-get.log
     DEBIAN_FRONTEND=noninteractive apt-get -y \
         -o DPkg::Options::=--force-confdef \
         -o DPkg::Options::=--force-confold \
@@ -25,7 +27,7 @@ done
 	curl wget \
 	openssl ssl-cert libssl-dev \
 	apache2 libapache2-mod-proxy-html \
-	php5 php5-curl php5-cli php5-intl php-apc 
+	php5 php5-curl php5-cli php5-intl php-apc >> /usr/local/src/config-debian-apt-get.log 
 
 ## change keymap ##
 if [ "$CHANGE_KEYMAP" = true ] ; then
@@ -34,13 +36,12 @@ if [ "$CHANGE_KEYMAP" = true ] ; then
 		apt-get -y install console-data \
         	console-setup \
 		console-locales \
-		keyboard-configuration
+		keyboard-configuration > /usr/local/src/config-debian-keymap.log
 	
-	echo " keymap installed"
+	test "$?" -eq 0 && echo "keymap installed correctly"
 fi
 
 ## Node, npm and bower ##
-   mkdir -p /usr/local/src
 # node
    cd /usr/local/src
    git clone http://github.com/ry/node.git
@@ -61,17 +62,22 @@ fi
    cd /usr/local/src/npm
    curl -O -L https://npmjs.org/install.sh
    sh install.sh
+   
+   command -v npm >/dev/null 2>&1 || { echo -e >&2 "\e[31mnpm is not installed correclty.  Aborting.\e[0m"; exit 1; }
 
 # config and install with npm
    echo "-------------- install bower -----------------"
    npm install -g bower
+   
+   command -v bower >/dev/null 2>&1 || { echo -e >&2 "\e[31mbower is not installed correclty.  Aborting.\e[0m"; exit 1; }
 
 # apache config
-mkdir -p /var/www/web
-chmod -R 700 /var/www/web
-chown -R www-data:www-data /var/www/web 
-a2enmod php5
-service apache2 reload
+echo "-------------- apache config -----------------"
+mkdir -p /var/www/web # create the web repot if it's not defined
+chmod -R 700 /var/www/web # set all the right for the root
+chown -R www-data:www-data /var/www/web  # change the owner to www-data
+a2enmod php5 # enable the apache module php5
+service apache2 reload # reload apache to be aware of the changes
 
 echo "Job done ;)"
 
