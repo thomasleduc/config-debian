@@ -2,8 +2,15 @@
 
 if [ -z "$1" ]; then
    echo "no hostname found"
-   echo "Usage: create-virtualhost <hostname>"
+   echo "Usage: create-virtualhost <hostname> <port>"
    exit 1
+fi
+
+if [ -z "$2" ]; then
+   echo "no port found default port :80"
+   port=80
+else
+   port=$2
 fi
 
 name=$1
@@ -22,6 +29,8 @@ DESTINATION_PATH=$APACHE_DIR/$name
 
 echo "Creation of $DESTINATION_PATH configuration file"
 
-sed s/\#7409564XtoreplaceX4659047\#/$name/g $VHOST_TEMPLATE > $DESTINATION_PATH
+sed s/\#7409564XnameX4659047\#/$name/g $VHOST_TEMPLATE > $DESTINATION_PATH
+sed -i s/\#7409564XportX4659047\#/$port/g $DESTINATION_PATH
 
 a2ensite $name
+service apache2 reload
