@@ -13,6 +13,8 @@ chmod +x config
 ./config
 ```
 
+### Options
+
 You can add ```-k``` option to change the keymap
 ```bash
 ./config -k
