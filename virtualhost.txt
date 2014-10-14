@@ -1,0 +1,22 @@
+<VirtualHost *:443>
+   ServerAdmin webmaster@localhost
+   DocumentRoot /var/www/#7409564XtoreplaceX4659047#/web
+   <Directory />
+	Options FollowSymLinks
+	AllowOverride All
+   </Directory>
+   <Directory /var/www/>
+       Options Indexes FollowSymLinks MultiViews
+       Allowoverride All
+       Order allow, deny
+       allow from all
+   </Directory>
+   Errorlog ${APACE_LOG_DIR}/#7409564XtoreplaceX4659047#.error.log
+   # Possible values include:debug, info, notice, warn, error, crit
+   # alert, emerg
+   LogLevel warn
+   CustomLog ${APACHE_LOG_DIR}/#7409564XtoreplaceX4659047#.access.log combined
+   SSLEngine on
+   SSLCertificateFile /etc/ssl/certs/ssl-cert-snakeoil.pem
+   SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+</VirtualHost>
