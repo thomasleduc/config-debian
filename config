@@ -1,7 +1,19 @@
 #!/bin/bash
 
-#apt-get install keyboard-configuration
-#dpkg-reconfigure keyboard-configuration
+CHANGE_KEYMAP=false
+
+## FLAG the option ##
+while getopts ":a" opt; do
+  case $opt in
+    k)
+      echo "change keymap activated" >&2
+      CHANGE_KEYMAP=true
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      ;;
+  esac
+done
 
 ## APT-GET ##
     apt-get update
@@ -14,6 +26,18 @@
 	openssl ssl-cert libssl-dev \
 	apache2 libapache2-mod-proxy-html \
 	php5 php5-curl php5-cli php5-intl php-apc 
+
+## change keymap ##
+if [ "$CHANGE_KEYMAP" = true ] ; then
+	echo "------------- configure keymap ----------------"
+	DEBIAN_FRONTEND=noninteractive \
+		apt-get -y install console-data \
+        	console-setup \
+		console-locales \
+		keyboard-configuration
+	
+	echo " keymap installed"
+fi
 
 ## Node, npm and bower ##
    mkdir -p /usr/local/src
