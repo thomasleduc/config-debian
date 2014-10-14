@@ -18,16 +18,16 @@ chmod +x config
 ./config [-knb]
 ```
 
--```-k``` option to change the keymap
+```-k``` option to change the keymap
 
-*This allow you to choose your keymap*
-
-
--```-n``` option to install npm
-
-*Please note that also install node. If you want to install bower, just add the ```-b``` option, no need to add the ```-n```*
+<small>This allow you to choose your keymap</small>
 
 
--```-b``` option to install bower
+```-n``` option to install npm
 
-*Please note that also install node and npm*
+<small>Please note that also install node. If you want to install bower, just add the ```-b``` option, no need to add the ```-n```</small>
+
+
+```-b``` option to install bower
+
+<small>Please note that also install node and npm</small>
