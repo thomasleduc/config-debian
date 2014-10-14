@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#apt-get install keyboard-configuration
+#dpkg-reconfigure keyboard-configuration
+
 ## APT-GET ##
     apt-get update
     DEBIAN_FRONTEND=noninteractive apt-get -y \
