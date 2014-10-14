@@ -22,4 +22,6 @@ DESTINATION_PATH=$APACHE_DIR/$name
 
 echo "Creation of $DESTINATION_PATH configuration file"
 
-sed s/\#7409564XtoreplaceX4659047\#/$name/g $VHOST_TEMPLATE $DESTINATION_PATH
+sed s/\#7409564XtoreplaceX4659047\#/$name/g $VHOST_TEMPLATE > $DESTINATION_PATH
+
+a2ensite $name

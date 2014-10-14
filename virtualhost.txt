@@ -8,10 +8,10 @@
    <Directory /var/www/>
        Options Indexes FollowSymLinks MultiViews
        Allowoverride All
-       Order allow, deny
+       Order allow,deny
        allow from all
    </Directory>
-   Errorlog ${APACE_LOG_DIR}/#7409564XtoreplaceX4659047#.error.log
+   Errorlog ${APACHE_LOG_DIR}/#7409564XtoreplaceX4659047#.error.log
    # Possible values include:debug, info, notice, warn, error, crit
    # alert, emerg
    LogLevel warn
