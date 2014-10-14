@@ -3,9 +3,9 @@ config-debian
 
 A basic configuration for turnkey VM
 
-# Instal
+# Install
 
-You have to be root
+### You have to be root
 
 ```bash
 wget https://raw.githubusercontent.com/thomasleduc/config-debian/master/config
