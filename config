@@ -43,14 +43,14 @@ fi
    mkdir -p /usr/local/src
 # node
    cd /usr/local/src
-   git clone http://github.com/ry/node.git /tmp/node
+   git clone http://github.com/ry/node.git
 # node compile
    
    cd /usr/local/src/node
    echo "------------- configure node ----------------"
-   res=`./configure > ../config.log`
+   res=`./configure > /usr/local/src/config.log`
    echo "------------- install node -------------------"
-   res && make && make install >> ../config.log
+   res && make && make install >> /usr/local/src/config.log
 
 # npm install
    echo "------------- install npm --------------------"
