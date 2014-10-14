@@ -1,6 +1,8 @@
 #!/bin/bash
 
 CHANGE_KEYMAP=false
+WITH_NODE=false
+WITH_BOWER=false
 
 mkdir -p /usr/local/src #create our working directory if it not exist
 
@@ -8,8 +10,17 @@ mkdir -p /usr/local/src #create our working directory if it not exist
 while getopts ":a" opt; do
   case $opt in
     k)
-      echo "change keymap activated" >&2
+      echo "option change keymap activated" >&2
       CHANGE_KEYMAP=true
+      ;;
+    n)
+      echo "option install node activated" >&2
+      WITH_NODE=true
+      ;;
+    b)
+      echo "option install bower activated" >&2
+      WITH_NODE=true
+      WITH_BOWER=true
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -42,6 +53,7 @@ if [ "$CHANGE_KEYMAP" = true ] ; then
 fi
 
 ## Node, npm and bower ##
+if [ "$WITH_NODE" = true ] ; then
 # node
    cd /usr/local/src
    git clone http://github.com/ry/node.git
@@ -66,10 +78,13 @@ fi
    command -v npm >/dev/null 2>&1 || { echo -e >&2 "\e[31mnpm is not installed correclty.  Aborting.\e[0m"; exit 1; }
 
 # config and install with npm
-   echo "-------------- install bower -----------------"
-   npm install -g bower
+   if [ "$WITH_BOWER" = true ] ; then
+       echo "-------------- install bower -----------------"
+       npm install -g bower
    
-   command -v bower >/dev/null 2>&1 || { echo -e >&2 "\e[31mbower is not installed correclty.  Aborting.\e[0m"; exit 1; }
+       command -v bower >/dev/null 2>&1 || { echo -e >&2 "\e[31mbower is not installed correclty.  Aborting.\e[0m"; exit 1; }
+   fi
+fi
 
 # apache config
 echo "-------------- apache config -----------------"
