@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+   echo "no hostname found"
+   echo "Usage: create-virtualhost <hostname>"
+   exit 1
+fi
+
+name=$1
+
+# Get the current directory
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Set the virtualhost basic template path
+VHOST_TEMPLATE=$DIR/virtualhost.txt
+
+# Set the apache directory path
+APACHE_DIR=/etc/apache2/sites-available
+
+# Set the destination path
+DESTINATION_PATH=$APACHE_DIR/$name
+
+echo "Creation of $DESTINATION_PATH configuration file"
+
+sed s/\#7409564XtoreplaceX4659047\#/$name/g $VHOST_TEMPLATE $DESTINATION_PATH
