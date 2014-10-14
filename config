@@ -52,7 +52,7 @@ fi
    res=$? #assign the return of configure
    echo "result of configure node : $res"
    echo "------------- install node -------------------"
-   $res && make && make install >> /usr/local/src/config.log
+   [ "$res" -eq 0 ] && make && make install >> /usr/local/src/config.log
 
    command -v node >/dev/null 2>&1 || { echo -e >&2 "\e[31mnode is not installed correclty.  Aborting.\e[0m"; exit 1; }
 
