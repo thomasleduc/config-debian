@@ -17,6 +17,7 @@ chmod +x config
 ```bash
 ./config [-knb]
 ```
+---
 
 ```-k``` option to change the keymap
 
